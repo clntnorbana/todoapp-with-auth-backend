@@ -79,7 +79,7 @@ const deleteTodo = async (req, res) => {
   }
 };
 
-// update todo
+// update todo.
 const updateTodo = async (req, res) => {
   const { id } = req.params;
 
@@ -88,7 +88,12 @@ const updateTodo = async (req, res) => {
   }
 
   try {
-    const todo = await Todo.findByIdAndUpdate({ _id: id }, { ...req.body });
+    const user_id = req.user._id;
+
+    const todo = await Todo.findByIdAndUpdate(
+      { _id: id, user_id },
+      { ...req.body }
+    );
 
     if (!todo) {
       notFoundError(res);
